@@ -331,13 +331,17 @@ main(int argc, char **argv) {
 				next_ccm.tv_usec = now.tv_usec;
 			} else {
 				next_ccm.tv_sec = now.tv_sec;
-				next_ccm.tv_usec =
-					now.tv_usec + CCMinterval * 1000;
 				/* did usec counter roll over? */
 				if ((now.tv_usec + CCMinterval * 1000)
 								>= 1000000) {
 					next_ccm.tv_sec++;
+				        next_ccm.tv_usec =
+					  now.tv_usec + CCMinterval * 1000 - 1000000;
 				}
+                                else {
+				next_ccm.tv_usec =
+					now.tv_usec + CCMinterval * 1000;
+                                }
 			}
 		}
 
